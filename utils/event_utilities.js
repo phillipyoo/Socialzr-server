@@ -21,7 +21,9 @@ const getEventById = function (req) {
 
 // add post
 // returns a Post object
-
+const addEvent = function (body) {
+    return new Event (body)
+}
 
 const deleteEvent = function (id) {
     return  Event.findByIdAndRemove(id)
