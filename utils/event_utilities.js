@@ -5,12 +5,12 @@ const Event = require("../models/event")
 
 // get all events
 // return a query
-const getAllEvents = function(req) {
-    if (req.query.category) {
-        return Event.findByEventCategory(req.query.category)
-    } else {
+const getAllEvents = function() {
+    // if (req.query.category) {
+    //     return Event.findByEventCategory(req.query.category)
+    // } else {
         return Event.find()
-    }
+    // }
 }
 
 // get event by id
@@ -21,9 +21,7 @@ const getEventById = function (req) {
 
 // add post
 // returns a Post object
-const addEvent = function (req) {
-    return new Event (req.body)
-}
+
 
 const deleteEvent = function (id) {
     return  Event.findByIdAndRemove(id)

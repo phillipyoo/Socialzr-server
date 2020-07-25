@@ -3,12 +3,12 @@ const Schema = mongoose.Schema
 
 const Event = new Schema ({
     title: {
-    type: String,
-    required: true
+        type: String,
+        required: true
     },
     category: {
-    type: String,
-    required: true,
+        type: String,
+        required: true,
     },
     organiser: {
         type: String,
