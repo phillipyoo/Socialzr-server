@@ -41,7 +41,7 @@ mongoose.connect(
 )
 
 // Use Cors
-const whitelist = ['http://localhost:3000']
+const whitelist = ['http://localhost:3000',"https://romantic-shannon-2ae252.netlify.app"]
 app.use(cors({
     credentials: true,
     origin: function (origin, callback) {
