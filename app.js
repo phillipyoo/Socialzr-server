@@ -21,7 +21,7 @@ const app = express()
 app.use(bodyParser.json())
 
 // Equivalant of create server in http library 
-const dbConn = "mongodb://localhost/socializr_app"
+const dbConn = mongoose.connect(process.env.MONGODB_URI) || "mongodb://localhost/socializr_app"
 
 mongoose.connect(
     dbConn,
