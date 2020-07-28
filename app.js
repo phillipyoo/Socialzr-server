@@ -11,7 +11,7 @@ const authRouter = require("./routes/auth_routes")
 // Sets port if deploying to external provider 
 // or port assigned already 
 
-const port = process.env.port || 3001
+const port = process.env.PORT || 3001
 
 
 // Define Express
@@ -20,8 +20,13 @@ const app = express()
 // Calls Middleware
 app.use(bodyParser.json())
 
+// If we are not running in production, load our local .env
+if(process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+
 // Equivalant of create server in http library 
-const dbConn = mongoose.connect(process.env.MONGODB_URI) || "mongodb://localhost/socializr_app"
+const dbConn = process.env.MONGODB_URI || "mongodb://localhost/socializr_app"
 
 mongoose.connect(
     dbConn,
@@ -35,7 +40,7 @@ mongoose.connect(
         if (err) {
             console.log("Error connecting to database", err)
         } else {
-            console.log("~Connected to database!~")
+            console.log("~Connected to database!~", dbConn)
         }
     }       
 )
