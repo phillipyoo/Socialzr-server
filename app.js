@@ -89,5 +89,5 @@ app.get("/",(req,res) => {
 });
 
 // Listen
-app.listen(process.env.PORT);
+// app.listen(process.env.PORT);
 app.listen(port, ()=> console.log("SocialZr server is running on port " + port))
