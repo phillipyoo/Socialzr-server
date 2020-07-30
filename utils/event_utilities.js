@@ -5,12 +5,12 @@ const Event = require("../models/event")
 
 // get all events
 // return a query
-const getAllEvents = function() {
-    // if (req.query.category) {
-    //     return Event.findByEventCategory(req.query.category)
-    // } else {
+const getAllEvents = function(req) {
+    if (req.query.attendee) {
+        return Event.findByAttendee(req.query.attendee)
+    } else {
         return Event.find()
-    // }
+    }
 }
 
 // get event by id
@@ -37,4 +37,30 @@ const updateEvent = function (req) {
     })
 }
 
-module.exports = {getAllEvents, getEventById, addEvent, deleteEvent, updateEvent}; 
+// get an eventPostId in req.params.eventId and add an username in req.body
+// look up the event with the id(findById)
+// create and add attendee to the array of attandees with the username
+
+const addAttandee = async function(req) {
+    //look up the event with the id (findById)
+    let event = await Event.findById(req.params.id)
+    let newAttandee = {
+        username: req.body.username
+    }
+    event.attendees.push(newAttandee)
+    
+    // call findByIdAndUpdate with the modified event object
+    return Event.findByIdAndUpdate(req.params.id, event, {
+        new: true
+    })
+}
+
+
+module.exports = {
+    getAllEvents, 
+    getEventById, 
+    addEvent, 
+    deleteEvent, 
+    updateEvent,
+    addAttandee
+}; 

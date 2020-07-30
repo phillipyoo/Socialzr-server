@@ -11,7 +11,7 @@ const authRouter = require("./routes/auth_routes")
 // Sets port if deploying to external provider 
 // or port assigned already 
 
-const port = process.env.port || 3001
+const port = process.env.PORT || 3001
 
 
 // Define Express
@@ -20,8 +20,13 @@ const app = express()
 // Calls Middleware
 app.use(bodyParser.json())
 
+// If we are not running in production, load our local .env
+if(process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+
 // Equivalant of create server in http library 
-const dbConn = mongoose.connect(process.env.MONGODB_URI) || "mongodb://localhost/socializr_app"
+const dbConn = process.env.MONGODB_URI || "mongodb://localhost/socializr_app"
 
 mongoose.connect(
     dbConn,
@@ -35,14 +40,14 @@ mongoose.connect(
         if (err) {
             console.log("Error connecting to database", err)
         } else {
-            console.log("~Connected to database!~")
+            console.log("~Connected to database!~", dbConn)
         }
     }       
 )
 
 // Use Cors
 const whitelist = [
-    // 'http://localhost:3000',
+    'http://localhost:3000',
     "https://romantic-shannon-2ae252.netlify.app"]
 app.use(cors({
     credentials: true,
@@ -59,7 +64,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 1800000
+        maxAge: 18000000
     },
     store: new MongoStore({
         mongooseConnection: mongoose.connection
@@ -84,5 +89,5 @@ app.get("/",(req,res) => {
 });
 
 // Listen
-app.listen(process.env.PORT);
+// app.listen(process.env.PORT);
 app.listen(port, ()=> console.log("SocialZr server is running on port " + port))
