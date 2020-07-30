@@ -22,7 +22,8 @@ const loginUser = function(req, res) {
         console.log("authenticated", req.user.username)
         console.log("session: ", req.session)
         console.log("user: ", req.user)
-        res.json(req.user)
+        res.status(200)
+        res.json({user: req.user, sessionId: req.sessionId})
     })
 }
 

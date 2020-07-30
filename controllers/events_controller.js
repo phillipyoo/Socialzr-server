@@ -3,7 +3,8 @@ const {
     getEventById, 
     addEvent, 
     deleteEvent, 
-    updateEvent
+    updateEvent,
+    addAttandee
 } = require("../utils/event_utilities")
 const { userAuthenticated } = require("../utils/common_utilities")
 
@@ -72,4 +73,23 @@ const changeEvent = function (req, res) {
     })
 }
 
-module.exports = {getEvents, getEvent, postEvent, removeEvent, changeEvent, userAuthenticated}
+//add a user to attendee list
+const addUserToList = function (req,res){
+
+        //resolve the promise from addAttandee
+        //add username to the reqest from the session
+        req.body.username = req.user.username
+        addAttandee(req).then((event) =>{
+            res.status(200);
+            res.send(event)
+        }).catch((err) =>{
+            res.status(500)
+            res.json({
+                error: err.message
+            })
+        })
+
+    }
+// }
+
+module.exports = {getEvents, getEvent, postEvent, removeEvent, changeEvent, userAuthenticated, addUserToList}
