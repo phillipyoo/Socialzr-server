@@ -35,4 +35,19 @@ console.log("user: ", req.user)
 res.sendStatus(200)
 }
 
-module.exports = {register, loginUser, logout}
+function activeUserSession(req,res) {
+    console.log('in activeUserSession sessionID', req.sessionID)
+    console.log('in activeUserSession user', req.user)
+    if(req.sessionID && req.user) {
+        res.status(200);
+        res.send({
+            sessionId: req.sessionID,
+            user: req.user
+        })
+    }
+    else {
+        res.sendStatus(403);
+    }    
+}
+
+module.exports = {register, loginUser, logout, activeUserSession}
